@@ -1,0 +1,8 @@
+# IDEA
+.idea/vcs.xml
+
+# Gradle
+.gradle
+
+# Java build output
+build/

@@ -1,0 +1,22 @@
+group 'ca.jbrains'
+version '0.1'
+
+apply plugin: 'groovy'
+apply plugin: 'java'
+apply plugin: 'idea'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    testCompile(
+            'junit:junit:4.12',
+            'org.jmock:jmock:2.6.0',
+            'org.jmock:jmock-junit4:2.6.0',
+            'org.spockframework:spock-core:1.1-groovy-2.4-rc-2')
+}
