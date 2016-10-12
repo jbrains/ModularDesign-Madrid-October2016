@@ -1,5 +1,6 @@
 # IDEA
 .idea/vcs.xml
+.idea/workspace.xml
 
 # Gradle
 .gradle
