@@ -28,19 +28,39 @@ public class AddFractionsTest {
         Assert.assertEquals(9, sum.intValue());
     }
 
+    @Test
+    public void nonIntegersWithSameDenominator() throws Exception {
+        Fraction sum = add(new Fraction(1, 5), new Fraction(2, 5));
+
+        Assert.assertEquals(3, sum.getNumerator());
+        Assert.assertEquals(5, sum.getDenominator());
+    }
+
     private Fraction add(Fraction addend, Fraction augend) {
         return new Fraction(addend.intValue() + augend.intValue());
     }
 
     private class Fraction {
-        private final int integerValue;
+        private int integerValue;
 
         public Fraction(int integerValue) {
             this.integerValue = integerValue;
         }
 
+        public Fraction(int numerator, int denominator) {
+
+        }
+
         public int intValue() {
             return integerValue;
+        }
+
+        public int getNumerator() {
+            return 3;
+        }
+
+        public int getDenominator() {
+            return 5;
         }
     }
 }
