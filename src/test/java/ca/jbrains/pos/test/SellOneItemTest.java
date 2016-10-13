@@ -10,7 +10,10 @@ public class SellOneItemTest {
     @Test
     public void productFound() throws Exception {
         final Display display = new Display();
-        final Sale sale = new Sale(display);
+        final Sale sale = new Sale(new HashMap<String, String>() {{
+            put("12345", "EUR 7,95");
+            put("23456", "EUR 12,50");
+        }}, display);
 
         sale.onBarcode("12345");
 
@@ -20,7 +23,10 @@ public class SellOneItemTest {
     @Test
     public void anotherProductFound() throws Exception {
         final Display display = new Display();
-        final Sale sale = new Sale(display);
+        final Sale sale = new Sale(new HashMap<String, String>() {{
+            put("12345", "EUR 7,95");
+            put("23456", "EUR 12,50");
+        }}, display);
 
         sale.onBarcode("23456");
 
@@ -28,18 +34,15 @@ public class SellOneItemTest {
     }
 
     private static class Sale {
-        private Display display;
+        private final Map<String, String> pricesByBarcode;
+        private final Display display;
 
-        private Sale(Display display) {
+        private Sale(Map<String, String> pricesByBarcode, Display display) {
+            this.pricesByBarcode = pricesByBarcode;
             this.display = display;
         }
 
         public void onBarcode(String barcode) {
-            final Map<String, String> pricesByBarcode = new HashMap<String, String>() {{
-                put("12345", "EUR 7,95");
-                put("23456", "EUR 12,50");
-            }};
-
             final String priceAsText = pricesByBarcode.get(barcode);
             if (priceAsText != null)
                 display.setText(priceAsText);
