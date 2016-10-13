@@ -2,6 +2,8 @@ package ca.jbrains.math;
 
 import ca.jbrains.math.test.AddFractionsTest;
 
+import javax.lang.model.element.NestingKind;
+
 public class Fraction {
     private final int numerator;
     private final int denominator;
@@ -13,6 +15,10 @@ public class Fraction {
     public Fraction(int numerator, int denominator) {
         this.numerator = numerator;
         this.denominator = denominator;
+    }
+
+    public static Fraction parse(String text) {
+        return new Fraction(Integer.parseInt(text));
     }
 
     public int getNumerator() {
