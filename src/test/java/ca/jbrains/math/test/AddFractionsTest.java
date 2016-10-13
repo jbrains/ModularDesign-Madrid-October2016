@@ -37,18 +37,24 @@ public class AddFractionsTest {
     }
 
     private Fraction add(Fraction addend, Fraction augend) {
-        return new Fraction(addend.intValue() + augend.intValue());
+        return new Fraction(
+                addend.getNumerator() + augend.getNumerator(),
+                addend.getDenominator());
     }
 
     private class Fraction {
+        private final int numerator;
+        private final int denominator;
         private int integerValue;
 
         public Fraction(int integerValue) {
-            this.integerValue = integerValue;
+            this(integerValue, 1);
         }
 
         public Fraction(int numerator, int denominator) {
-
+            this.integerValue = numerator;
+            this.numerator = numerator;
+            this.denominator = denominator;
         }
 
         public int intValue() {
@@ -56,11 +62,11 @@ public class AddFractionsTest {
         }
 
         public int getNumerator() {
-            return 3;
+            return numerator;
         }
 
         public int getDenominator() {
-            return 5;
+            return denominator;
         }
     }
 }
