@@ -6,73 +6,56 @@ import org.junit.Test;
 public class AddFractionsTest {
     @Test
     public void zeroPlusZero() throws Exception {
-        Fraction sum = add(new Fraction(0), new Fraction(0));
-        Assert.assertEquals(0, sum.intValue());
+        Assert.assertEquals(new Fraction(0), add(new Fraction(0), new Fraction(0)));
     }
 
     @Test
     public void nonZeroPlusZero() throws Exception {
-        Fraction sum = add(new Fraction(3), new Fraction(0));
-        Assert.assertEquals(3, sum.intValue());
+        Assert.assertEquals(new Fraction(3), add(new Fraction(3), new Fraction(0)));
     }
 
     @Test
     public void zeroPlusNonZero() throws Exception {
-        Fraction sum = add(new Fraction(0), new Fraction(7));
-        Assert.assertEquals(7, sum.intValue());
+        Assert.assertEquals(new Fraction(7), add(new Fraction(0), new Fraction(7)));
     }
 
     @Test
     public void nonZeroPlusNonZero() throws Exception {
-        Fraction sum = add(new Fraction(4), new Fraction(5));
-        Assert.assertEquals(9, sum.intValue());
+        Assert.assertEquals(new Fraction(9), add(new Fraction(4), new Fraction(5)));
     }
 
     @Test
     public void nonIntegersWithSameDenominator() throws Exception {
-        Fraction sum = add(new Fraction(1, 5), new Fraction(2, 5));
-
-        Assert.assertEquals(3, sum.getNumerator());
-        Assert.assertEquals(5, sum.getDenominator());
+        Assert.assertEquals(
+                new Fraction(3, 5),
+                add(new Fraction(1, 5), new Fraction(2, 5)));
     }
 
     @Test
     public void differentDenominator() throws Exception {
-        Fraction sum = add(new Fraction(3, 4), new Fraction(1, 7));
-
-        Assert.assertEquals(25, sum.getNumerator());
-        Assert.assertEquals(28, sum.getDenominator());
+        Assert.assertEquals(
+                new Fraction(25, 28),
+                add(new Fraction(3, 4), new Fraction(1, 7)));
     }
 
     private Fraction add(Fraction addend, Fraction augend) {
-        if (addend.getDenominator() == augend.getDenominator())
-            return new Fraction(
-                    addend.getNumerator() + augend.getNumerator(),
-                    addend.getDenominator());
-        else
-            return new Fraction(
-                    addend.getNumerator() * augend.getDenominator()
-                            + augend.getNumerator() * addend.getDenominator(),
-                    addend.getDenominator() * augend.getDenominator());
+        return new Fraction(
+                addend.getNumerator() * augend.getDenominator()
+                        + augend.getNumerator() * addend.getDenominator(),
+                addend.getDenominator() * augend.getDenominator());
     }
 
     private class Fraction {
         private final int numerator;
         private final int denominator;
-        private int integerValue;
 
         public Fraction(int integerValue) {
             this(integerValue, 1);
         }
 
         public Fraction(int numerator, int denominator) {
-            this.integerValue = numerator;
             this.numerator = numerator;
             this.denominator = denominator;
-        }
-
-        public int intValue() {
-            return integerValue;
         }
 
         public int getNumerator() {
@@ -81,6 +64,28 @@ public class AddFractionsTest {
 
         public int getDenominator() {
             return denominator;
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            if (other instanceof Fraction) {
+                Fraction that = (Fraction) other;
+                return
+                        this.getNumerator() * that.getDenominator()
+                                == that.getNumerator() * this.getDenominator();
+            } else {
+                return false;
+            }
+        }
+
+        @Override
+        public int hashCode() {
+            return 0;
+        }
+
+        @Override
+        public String toString() {
+            return String.format("%d/%d", numerator, denominator);
         }
     }
 }
