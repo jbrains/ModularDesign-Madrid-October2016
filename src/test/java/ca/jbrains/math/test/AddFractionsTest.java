@@ -29,12 +29,7 @@ public class AddFractionsTest {
     }
 
     private Fraction add(Fraction addend, Fraction augend) {
-        if (augend.integerValue == 0)
-            return addend;
-        else if (addend.integerValue == 0)
-            return augend;
-        else
-            return new Fraction(9);
+        return new Fraction(addend.intValue() + augend.intValue());
     }
 
     private class Fraction {
