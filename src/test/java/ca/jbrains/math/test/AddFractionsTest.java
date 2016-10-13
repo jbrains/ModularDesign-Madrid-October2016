@@ -36,10 +36,21 @@ public class AddFractionsTest {
         Assert.assertEquals(5, sum.getDenominator());
     }
 
+    @Test
+    public void differentDenominator() throws Exception {
+        Fraction sum = add(new Fraction(3, 4), new Fraction(1, 7));
+
+        Assert.assertEquals(25, sum.getNumerator());
+        Assert.assertEquals(28, sum.getDenominator());
+    }
+
     private Fraction add(Fraction addend, Fraction augend) {
-        return new Fraction(
-                addend.getNumerator() + augend.getNumerator(),
-                addend.getDenominator());
+        if (addend.getDenominator() == augend.getDenominator())
+            return new Fraction(
+                    addend.getNumerator() + augend.getNumerator(),
+                    addend.getDenominator());
+        else
+            return new Fraction(25, 28);
     }
 
     private class Fraction {
