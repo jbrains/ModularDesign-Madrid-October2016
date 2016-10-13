@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/PointOfSale.iml" filepath="$PROJECT_DIR$/.idea/modules/PointOfSale.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/PointOfSale_main.iml" filepath="$PROJECT_DIR$/.idea/modules/PointOfSale_main.iml" group="PointOfSale" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/PointOfSale_test.iml" filepath="$PROJECT_DIR$/.idea/modules/PointOfSale_test.iml" group="PointOfSale" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MathLibrary.iml" filepath="$PROJECT_DIR$/.idea/modules/MathLibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MathLibrary_main.iml" filepath="$PROJECT_DIR$/.idea/modules/MathLibrary_main.iml" group="MathLibrary" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MathLibrary_test.iml" filepath="$PROJECT_DIR$/.idea/modules/MathLibrary_test.iml" group="MathLibrary" />
     </modules>
   </component>
 </project>

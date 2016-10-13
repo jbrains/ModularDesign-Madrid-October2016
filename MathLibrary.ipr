@@ -46,7 +46,7 @@
   </component>
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/PointOfSale.iml" filepath="$PROJECT_DIR$/PointOfSale.iml"/>
+      <module fileurl="file://$PROJECT_DIR$/MathLibrary.iml" filepath="$PROJECT_DIR$/MathLibrary.iml"/>
     </modules>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" assert-keyword="true" jdk-15="true" project-jdk-type="JavaSDK" assert-jdk-15="true" project-jdk-name="1.8">
