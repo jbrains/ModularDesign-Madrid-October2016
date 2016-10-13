@@ -3,6 +3,7 @@ package ca.jbrains.pos.test;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,6 +34,16 @@ public class SellOneItemTest {
         Assert.assertEquals("EUR 12,50", display.getText());
     }
 
+    @Test
+    public void productNotFound() throws Exception {
+        final Display display = new Display();
+        final Sale sale = new Sale(Collections.emptyMap(), display);
+
+        sale.onBarcode("99999");
+
+        Assert.assertEquals("Product not found for 99999", display.getText());
+    }
+
     private static class Sale {
         private final Map<String, String> pricesByBarcode;
         private final Display display;
@@ -44,7 +55,10 @@ public class SellOneItemTest {
 
         public void onBarcode(String barcode) {
             final String priceAsText = pricesByBarcode.get(barcode);
-            if (priceAsText != null)
+            if (priceAsText == null)
+                display.setText(
+                        String.format("Product not found for %s", barcode));
+            else
                 display.setText(priceAsText);
         }
     }
