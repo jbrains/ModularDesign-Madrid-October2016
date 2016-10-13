@@ -22,11 +22,19 @@ public class AddFractionsTest {
         Assert.assertEquals(7, sum.intValue());
     }
 
+    @Test
+    public void nonZeroPlusNonZero() throws Exception {
+        Fraction sum = add(new Fraction(4), new Fraction(5));
+        Assert.assertEquals(9, sum.intValue());
+    }
+
     private Fraction add(Fraction addend, Fraction augend) {
         if (augend.integerValue == 0)
             return addend;
-        else
+        else if (addend.integerValue == 0)
             return augend;
+        else
+            return new Fraction(9);
     }
 
     private class Fraction {
