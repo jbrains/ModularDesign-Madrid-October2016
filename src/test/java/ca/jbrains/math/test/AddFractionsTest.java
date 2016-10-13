@@ -50,7 +50,10 @@ public class AddFractionsTest {
                     addend.getNumerator() + augend.getNumerator(),
                     addend.getDenominator());
         else
-            return new Fraction(25, 28);
+            return new Fraction(
+                    addend.getNumerator() * augend.getDenominator()
+                            + augend.getNumerator() * addend.getDenominator(),
+                    addend.getDenominator() * augend.getDenominator());
     }
 
     private class Fraction {
