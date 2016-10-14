@@ -1,14 +1,14 @@
 package ca.jbrains.pos.test;
 
+import ca.jbrains.pos.BarcodeScannedListener;
+import ca.jbrains.pos.TextInputConsumerAndCommandInterpreter;
 import org.jmock.Expectations;
 import org.jmock.auto.Mock;
 import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Rule;
 import org.junit.Test;
 
-import java.io.Reader;
 import java.io.StringReader;
-import java.util.Scanner;
 
 public class ConsumeInputAndInterpretTextCommandsTest {
     @Rule
@@ -49,39 +49,4 @@ public class ConsumeInputAndInterpretTextCommandsTest {
                 .consume(new StringReader("::barcode 1::\n::barcode 2::\n::barcode 3::\n"));
     }
 
-    @Test
-    public void emptyCommand() throws Exception {
-        context.checking(new Expectations() {{
-            oneOf(barcodeScannedListener).onBarcode(with("::barcode 1::"));
-            oneOf(barcodeScannedListener).onBarcode(with("::barcode 2::"));
-            oneOf(barcodeScannedListener).onBarcode(with("::barcode 3::"));
-        }});
-
-        new TextInputConsumerAndCommandInterpreter(barcodeScannedListener)
-                .consume(new StringReader("::barcode 1::\n" +
-                        " \t \n" +
-                        "\r" +
-                        " \n" +
-                        "::barcode 2::\n" +
-                        "\n" +
-                        "::barcode 3::\n"));
-    }
-
-    public interface BarcodeScannedListener {
-        void onBarcode(String barcode);
-    }
-
-    private static class TextInputConsumerAndCommandInterpreter {
-        private final BarcodeScannedListener barcodeScannedListener;
-
-        public TextInputConsumerAndCommandInterpreter(BarcodeScannedListener barcodeScannedListener) {
-            this.barcodeScannedListener = barcodeScannedListener;
-        }
-
-        public void consume(Reader commandSource) {
-            final Scanner commandScanner = new Scanner(commandSource);
-            while (commandScanner.hasNext())
-                barcodeScannedListener.onBarcode(commandScanner.nextLine());
-        }
-    }
 }
