@@ -7,27 +7,15 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class InMemoryCatalogTest {
-    @Test
-    public void productFound() throws Exception {
-        final String barcode = "::barcode::";
-        final Price price = Price.cents(700);
+public class InMemoryCatalogTest extends CatalogContract {
 
-        final Catalog catalog = createCatalogWith(barcode, price);
-        Assert.assertEquals(price, catalog.findPrice(barcode));
-    }
-
-    @Test
-    public void productNotFound() throws Exception {
-        final Catalog catalog = createCatalogWithout("::unknown::");
-        Assert.assertEquals(null, catalog.findPrice("::unknown::"));
-    }
-
-    private Catalog createCatalogWith(String barcode, Price price) {
+    @Override
+    protected Catalog createCatalogWith(String barcode, Price price) {
         return new InMemoryCatalog(Collections.<String, Price>singletonMap(barcode, price));
     }
 
-    private Catalog createCatalogWithout(String barcodeToAvoid) {
+    @Override
+    protected Catalog createCatalogWithout(String barcodeToAvoid) {
         return new InMemoryCatalog(new HashMap<String, Price>() {{
             put("Not " + barcodeToAvoid, Price.cents(1));
             put("Definitely not " + barcodeToAvoid, Price.cents(2));
