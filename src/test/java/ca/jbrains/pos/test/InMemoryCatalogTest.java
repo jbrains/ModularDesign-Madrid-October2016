@@ -13,21 +13,21 @@ public class InMemoryCatalogTest {
         final String barcode = "::barcode::";
         final Price price = Price.cents(700);
 
-        final InMemoryCatalog catalog = createCatalogWith(barcode, price);
+        final Catalog catalog = createCatalogWith(barcode, price);
         Assert.assertEquals(price, catalog.findPrice(barcode));
     }
 
     @Test
     public void productNotFound() throws Exception {
-        final InMemoryCatalog catalog = createCatalogWithout("::unknown::");
+        final Catalog catalog = createCatalogWithout("::unknown::");
         Assert.assertEquals(null, catalog.findPrice("::unknown::"));
     }
 
-    private InMemoryCatalog createCatalogWith(String barcode, Price price) {
+    private Catalog createCatalogWith(String barcode, Price price) {
         return new InMemoryCatalog(Collections.<String, Price>singletonMap(barcode, price));
     }
 
-    private InMemoryCatalog createCatalogWithout(String barcodeToAvoid) {
+    private Catalog createCatalogWithout(String barcodeToAvoid) {
         return new InMemoryCatalog(new HashMap<String, Price>() {{
             put("Not " + barcodeToAvoid, Price.cents(1));
             put("Definitely not " + barcodeToAvoid, Price.cents(2));
@@ -35,7 +35,7 @@ public class InMemoryCatalogTest {
         }});
     }
 
-    public static class InMemoryCatalog {
+    public static class InMemoryCatalog implements Catalog {
         private final Map<String, Price> pricesByBarcode;
 
         public InMemoryCatalog(Map<String, Price> pricesByBarcode) {
