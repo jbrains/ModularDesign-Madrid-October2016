@@ -11,21 +11,23 @@ public class SellOneItemControllerTest {
 
     @Test
     public void productFound() throws Exception {
+        final int irrelevantCentsValue = 1250;
+
         final Catalog catalog = context.mock(Catalog.class);
         final Display display = context.mock(Display.class);
-        final Price price = Price.cents(1250);
+        final Price price = Price.cents(irrelevantCentsValue);
 
         final SellOneItemController controller
                 = new SellOneItemController(catalog, display);
 
         context.checking(new Expectations() {{
-            allowing(catalog).findPrice(with("12345"));
+            allowing(catalog).findPrice(with("::known::"));
             will(returnValue(price));
 
             oneOf(display).displayPrice(with(price));
         }});
 
-        controller.onBarcode("12345");
+        controller.onBarcode("::known::");
     }
 
     @Test
@@ -37,13 +39,13 @@ public class SellOneItemControllerTest {
                 = new SellOneItemController(catalog, display);
 
         context.checking(new Expectations() {{
-            allowing(catalog).findPrice(with("99999"));
+            allowing(catalog).findPrice(with("::unknown::"));
             will(returnValue(null));
 
-            oneOf(display).displayProductNotFoundMessage(with("99999"));
+            oneOf(display).displayProductNotFoundMessage(with("::unknown::"));
         }});
 
-        controller.onBarcode("99999");
+        controller.onBarcode("::unknown::");
     }
 
     @Test
@@ -72,17 +74,6 @@ public class SellOneItemControllerTest {
         void displayScannedEmptyBarcodeMessage();
     }
 
-    public static class Price {
-        public static Price cents(int centsValue) {
-            return new Price();
-        }
-
-        @Override
-        public String toString() {
-            return "a Price";
-        }
-    }
-
     private class SellOneItemController {
         private final Catalog catalog;
         private final Display display;
@@ -97,7 +88,7 @@ public class SellOneItemControllerTest {
                 display.displayScannedEmptyBarcodeMessage();
                 return;
             }
-            
+
             final Price price = catalog.findPrice(barcode);
             if (price == null)
                 display.displayProductNotFoundMessage(barcode);
