@@ -49,6 +49,24 @@ public class ConsumeInputAndInterpretTextCommandsTest {
                 .consume(new StringReader("::barcode 1::\n::barcode 2::\n::barcode 3::\n"));
     }
 
+    @Test
+    public void emptyCommand() throws Exception {
+        context.checking(new Expectations() {{
+            oneOf(barcodeScannedListener).onBarcode(with("::barcode 1::"));
+            oneOf(barcodeScannedListener).onBarcode(with("::barcode 2::"));
+            oneOf(barcodeScannedListener).onBarcode(with("::barcode 3::"));
+        }});
+
+        new TextInputConsumerAndCommandInterpreter(barcodeScannedListener)
+                .consume(new StringReader("::barcode 1::\n" +
+                        " \t \n" +
+                        "\r" +
+                        " \n" +
+                        "::barcode 2::\n" +
+                        "\n" +
+                        "::barcode 3::\n"));
+    }
+
     public interface BarcodeScannedListener {
         void onBarcode(String barcode);
     }
