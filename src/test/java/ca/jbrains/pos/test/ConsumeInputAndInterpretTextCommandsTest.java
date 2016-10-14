@@ -27,6 +27,16 @@ public class ConsumeInputAndInterpretTextCommandsTest {
                 .consume(new StringReader("::barcode::\n"));
     }
 
+    @Test
+    public void noBarcodes() throws Exception {
+        context.checking(new Expectations() {{
+            never(barcodeScannedListener);
+        }});
+
+        new TextInputConsumerAndCommandInterpreter(barcodeScannedListener)
+                .consume(new StringReader(""));
+    }
+
     public interface BarcodeScannedListener {
         void onBarcode(String barcode);
     }
@@ -39,7 +49,9 @@ public class ConsumeInputAndInterpretTextCommandsTest {
         }
 
         public void consume(Reader commandSource) {
-            barcodeScannedListener.onBarcode(new Scanner(commandSource).nextLine());
+            final Scanner commandScanner = new Scanner(commandSource);
+            if (commandScanner.hasNext())
+                barcodeScannedListener.onBarcode(commandScanner.nextLine());
         }
     }
 }
