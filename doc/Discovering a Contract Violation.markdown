@@ -67,3 +67,44 @@ Inbox
 
 </aside>
 
+## RTFM!
+
+Before proceeding, I thought I should read the documentation for `Scanner` to see whether I should have tried to use it at all for this purpose. The Javadoc clearly reads:
+
+>   A `Scanner` is not safe for multithreaded use without external synchronization.
+
+This seems like a pretty good clue that `Scanner` makes no guarantees about the sequence of its operations, and that we can't justify using it to consume input for an application that cares about the timing of input and output. **It appears that we made an incorrect assumption about the contract of `Scanner`.** Oops. This happens.
+
+Sadly, it never occurred to me that `Scanner` would not work the way I expected, and so it did not occur to me to write a test — nor even read the documentation! — to verify my assumptions. **I ignored a risk and it became a problem.** I made a mistake. Fortunately, wanting to demonstrate the system to The Customer involves integrating everything, and that led to discovering the problem.
+
+## Aha! We _Do_ Need Integrated Tests!
+
+Yes and no: I might have needed an integrated test to discover the problem, but I certainly didn't need to integrate _our application_ to discover the problem. In this case, I took a risk and happened to discover the problem after integrating our application, but that doesn't mean that I needed to integrate our application to discover the problem; it merely means that I took a shortcut, using a class before I understood how it worked, and that led to an integration mistake. I could have discovered the problem without integrating the whole system and in this case I could probably even have discovered the problem without writing even the smallest integrated test. I could have read the manual.
+
+Even if I had read the Javadoc for `Scanner`, however, I might not have noticed this statement about the `Scanner`. Even if I had read that statement, I might not have realized its significance in the context of building this application. Even if I had noticed this statement _and_ realized its significance, I might have needed an integrated test to confirm my suspicion that `Scanner` would not do what we need. This makes sense to me, because it involves the outermost layer of our code integrating with third-party software. The few integrated tests that I write, I write to check exactly and only the last layer of my code that integrates with their code. In this case, an integrated test makes perfect sense to me, and since I don't see how to avoid an integrated test in this case, at least I feel forced to write one where I also consider it reasonable to write one. It could be worse.
+
+## Abandoning `Scanner`
+
+As I read more of the documentation for `Scanner`, I start feeling that I made a poor choice from the beginning. This class seems better suited to parse text and not to chop `stdin` into lines for a command line interface. It really seems like `BufferedReader` fits that job better.
+
+I wanted to use `Scanner` because of the convenient `hasNext()`/`nextLine()` API. Fortunately, `BufferedReader` exposes the lines as a `Stream`, which gives me an API of similar convenience, so I feel satisfied abandoning `Scanner` for this purpose.
+
+## Finishing the Learning Tests
+
+I might as well run the remaining learning tests so that I feel more confident about my now-current understanding of how things work.
+
+First, I try `Scanner` with `hasNextLine()` to see whether that changes the behavior. I'm glad I did this, because `Scanner` with `hasNextLine()` appears to behave exactly as I expect: this version of the program echoes the empty lines right away. In reading the Javadoc for both methods, I don't immediately see a difference; however, `hasNext()` appears to check for "is there another token to consume?" while `hasNextLine()` checks for "is there another line to consume?" Since `Scanner` consumes tokens delimited by whitespace (by default), I surmise — and I'm not going to bother to confirm this now — that `hasNext()` causes the `Scanner` to scan _up to but excluding the newline character_, which results coincidentally (or merely in some way that I don't yet understand) in not quite consuming an empty line. This doesn't adequately explain (to me) the difference in behavior between using `hasNext()` and `hasNextLine()`, but it gives me enough to understand that a difference might exist, and that therefore **I probably never want to use `Scanner.hasNext()` to decide whether there are more lines of input to consume from an input stream.** For now, it suffices to conclude this and go on my way. It means that I _could_ use `Scanner` as long as I remember to use `hasNextLine()`. Since I don't want to have to remember this level of detail to get the desired behavior, I hope that `BufferedReader.lines()` works the way I need it to work for this application! This now becomes the most urgent task.
+
+<aside markdown="1">
+
+Inbox
+
+-   Run Echo programs manually; do we notice a difference?
+    -   Use `BufferedReader` with `lines()`; does it behave differently?
+-   If we pipe `stdout` to a file, do we notice a difference?
+-   Can we simulate running the program and typing on the keyboard, so that we can automate this part? Can we examine the output to reproduce the problem?
+-   If we run the Echo programs outside IDEA, do they behave differently?
+
+</aside>
+
+## 
