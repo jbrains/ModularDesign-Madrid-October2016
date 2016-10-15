@@ -21,17 +21,18 @@ public class PointOfSaleTerminal {
                 System.out.println(String.format("Scanning error: empty barcode"));
             }
         };
+
         final SellOneItemController sellOneItemController = new SellOneItemController(
                 new InMemoryCatalog(new HashMap<String, Price>() {{
                     put("8410055050011", Price.cents(179));
                 }}),
                 consoleDisplay
         );
-
-        // So far, there's only one command!
-        final TextCommandListener commandInterpreter = new TextCommandListener() {
+        
+        new FireTextCommands(new TextCommandListener() {
             @Override
             public void onCommand(String commandText) {
+                // So far, there's only one command!
                 sellOneItemController.onBarcode(commandText);
             }
 
@@ -39,8 +40,6 @@ public class PointOfSaleTerminal {
             public void onEmptyCommand() {
                 consoleDisplay.displayScannedEmptyBarcodeMessage();
             }
-        };
-
-        new FireTextCommands(commandInterpreter).consumeText(new InputStreamReader(System.in));
+        }).consumeText(new InputStreamReader(System.in));
     }
 }
