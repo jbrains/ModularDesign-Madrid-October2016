@@ -22,6 +22,10 @@ public class DoesBufferedReaderConsumeStdinLazily {
         final BufferedReader source = new BufferedReader(
                 new InputStreamReader(System.in)
         );
-        while (true) System.out.println(source.readLine());
+        while (true) {
+            final String line = source.readLine();
+            if (line == null) break;
+            System.out.println(line);
+        }
     }
 }

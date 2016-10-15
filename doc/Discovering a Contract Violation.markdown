@@ -109,3 +109,50 @@ Inbox
 
 When I run the Echo program with `BufferedReader` using `lines()`, it behaves the way I expect. Sadly, I can't think of how to write a contract test for this behavior, so for now, I have to document my understanding of the contract carefully. I will write explanatory comments in the code until I can figure out how to write an automated test that expresses the notion that `Scanner.hasNext()` might delay consuming certain lines of text, and therefore I can't use it to integrate with an input stream in situations where I need to predict the timing of consuming the text line by line.
 
+## Cleaning Up Before Moving On
+
+I want to try `BufferedReader.lines()` in the application now, but before I do that, I want to clean up the inbox, removing anything that I no longer care about doing.
+
+<aside markdown="1">
+
+Inbox
+
+-   ~~If we pipe `stdout` to a file, do we notice a difference?~~
+-   Can we simulate running the program and typing on the keyboard, so that we can automate this part? Can we examine the output to reproduce the problem?
+-   If we run the Echo programs outside IDEA, do they behave differently?
+
+</aside>
+
+I suppose it's worth running the programs outside IDEA in order to confirm that they behave as expected in the production environment. Do I even remember how to do this? It appears I do.
+
+### This Is Why We Run the Tests!
+
+I ran all four test programs from an OS command line and they behaved the same as they did when I ran them in the IDE; however, I discovered one new thing about the contract of `BufferedReader`: if I consume lines "the old way" (loop until I get `null`), then I can't end the process by pressing `CTRL+D` the way I can with the other three implementations. In the case of `BufferedReader` and "looping by hand", pressing `CTRL+D` causes the program to echo the string `null` to `stdout`. I have to use `CTRL+C` to break the program. I don't know enough about the difference in OS process signal sent by` CTRL+D `compared to `CTRL+C` on Mac OS and I'm writing this on a plane, so even if I wanted to check — which I don't — I can't be bothered to do it over an airplane Wifi connexion. I'd rather save the battery power to finish writing this article and get the application working.
+
+<aside markdown="1">
+
+Inbox
+
+-   ~~If we pipe `stdout` to a file, do we notice a difference?~~
+-   Can we simulate running the program and typing on the keyboard, so that we can automate this part? Can we examine the output to reproduce the problem?
+
+</aside>
+
+I have run the manual test and documented my findings with enough detail that someone else will probably understand it. Accordingly, I feel comfortable not trying to turn these into automated tests, but instead, moving on to fixing the application and bringing this episode to a close. I guess I could use some kind of window-level automation like the old Microsoft ScriptIt! to script the actions of the running those programs, but I'm not convinced that I could scrape the output, so I would need to research from scratch how to do that, and I won't do that now.
+
+Even so… I suppose I can _quickly_ try piping input from a file to see whether that reproduces the problem. It takes less than two minutes, so by the [Two-Minute Rule][] I should just do it now.
+
+[Two-Minute Rule]: http://link.jbrains.ca/1OiXvSo
+
+Piping input from a file only helps if I can simulate the problem. Fortunately, I had to take a break from writing this article, and during that break, I realized how to simulate the problem: pipe in a file with only three empty lines and expect either no output or exactly three empty lines of output. I ran this test for all four programs and got the behavior I expected: `Scanner.hasNext()` produced no output, while the other three programs produced three empty lines of output.
+
+<aside markdown="1">
+
+Actually, no: the old-style `BufferedReader` program produced three empty lines, then a bunch of lines of `null`. At this point, I realized that I wrote that program incorrectly, forgetting to `break` on the first `null` line. I corrected my mistake. Oops.
+
+</aside>
+
+
+
+
+
