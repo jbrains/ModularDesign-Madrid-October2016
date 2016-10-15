@@ -3,7 +3,7 @@ title: "Discovering a Contract Violation"
 date: 2016-10-15
 ---
 
-I had am embarrassing situation happen in a training course: I put everything together and It **Didn't** Just Work. I couldn't figure out on stage what had happened, so I'm writing this article to document how I explored the problem.
+I had an embarrassing situation happen in a training course: I put everything together and It **Didn't** Just Work. I couldn't figure out on stage what had happened, so I'm writing this article to document how I explored the problem.
 
 # The Problem
 
@@ -176,5 +176,5 @@ I run it… and it works!
 
 I need to separate "consume input" from "interpret command", making sure that I check the special case where "consume input" immediately processes empty lines. I will try to pass the test with `Scanner.hasNext()`, and I expect not to be able to do that; once I confirm that, then I will document that fact, then fix the implementation.
 
-After fixing the implementation, I extracted the Contract Tests that will help avoid this problem in the future.
+After fixing the implementation, I extracted the Contract Tests that will help avoid this problem in the future. 
 
