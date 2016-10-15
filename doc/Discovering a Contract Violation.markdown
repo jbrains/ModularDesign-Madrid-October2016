@@ -176,5 +176,9 @@ I run it… and it works!
 
 I need to separate "consume input" from "interpret command", making sure that I check the special case where "consume input" immediately processes empty lines. I will try to pass the test with `Scanner.hasNext()`, and I expect not to be able to do that; once I confirm that, then I will document that fact, then fix the implementation.
 
-After fixing the implementation, I extracted the Contract Tests that will help avoid this problem in the future. 
+After fixing the implementation, I extracted the Contract Tests that will help avoid this problem in the future.
+
+Well… _actually_, I plan to filter out all the empty commands strip whitespace anyway, so I'd rather do that than fix the behavior for empty commands as I've done here. I might as well do that, then the problem disappears. In this case, I leave behind some learning tests for `Scanner.hasNext()` that I might find useful in the future. I suppose I should really extract those into a separate project. I'll do that as soon as I have another two examples of similar misunderstandings of the Java standard library.
+
+
 
