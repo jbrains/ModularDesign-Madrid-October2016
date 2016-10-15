@@ -9,12 +9,13 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import java.io.BufferedReader;
+import java.io.Reader;
 import java.io.StringReader;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class ConsumeTextCommandsWithBufferedReader {
+public class FireTextCommandsWithBufferedReader {
     @Rule
     public JUnitRuleMockery context = new JUnitRuleMockery();
 
@@ -38,9 +39,9 @@ public class ConsumeTextCommandsWithBufferedReader {
             );
         }});
 
-        final ConsumeTextInputAsLines consumeTextInputAsLines = new ConsumeTextInputAsLines(textCommandListener);
+        final FireTextCommands fireTextCommands = new FireTextCommands(textCommandListener);
 
-        consumeTextInputAsLines.consume(new StringReader(
+        fireTextCommands.consumeText(new StringReader(
                 String.join(
                         System.lineSeparator(),
                         nLinesLike(5, "::valid command %d::")
@@ -59,15 +60,15 @@ public class ConsumeTextCommandsWithBufferedReader {
         void onCommand(String commandText);
     }
 
-    public static class ConsumeTextInputAsLines {
+    public static class FireTextCommands {
         private final TextCommandListener textCommandListener;
 
-        public ConsumeTextInputAsLines(TextCommandListener textCommandListener) {
+        public FireTextCommands(TextCommandListener textCommandListener) {
             this.textCommandListener = textCommandListener;
         }
 
-        public void consume(StringReader stringReader) {
-            new BufferedReader(stringReader)
+        public void consumeText(Reader textSource) {
+            new BufferedReader(textSource)
                     .lines()
                     .forEach(textCommandListener::onCommand);
         }
