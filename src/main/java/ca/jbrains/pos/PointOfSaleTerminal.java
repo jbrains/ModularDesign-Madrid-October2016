@@ -27,6 +27,9 @@ public class PointOfSaleTerminal {
                 }
         );
 
-        new FireTextCommands(sellOneItemController::onBarcode).consumeText(new InputStreamReader(System.in));
+        // So far, there's only one command!
+        final TextCommandListener commandInterpreter = sellOneItemController::onBarcode;
+        
+        new FireTextCommands(commandInterpreter).consumeText(new InputStreamReader(System.in));
     }
 }
