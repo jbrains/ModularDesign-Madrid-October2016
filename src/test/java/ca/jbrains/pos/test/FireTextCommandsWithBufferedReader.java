@@ -1,5 +1,7 @@
 package ca.jbrains.pos.test;
 
+import ca.jbrains.pos.FireTextCommands;
+import ca.jbrains.pos.TextCommandListener;
 import org.jmock.Expectations;
 import org.jmock.Sequence;
 import org.jmock.auto.Auto;
@@ -9,14 +11,11 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-import java.io.BufferedReader;
-import java.io.Reader;
 import java.io.StringReader;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public class FireTextCommandsWithBufferedReader {
     @Rule
@@ -93,33 +92,5 @@ public class FireTextCommandsWithBufferedReader {
         fireTextCommands.consumeText(new StringReader(
                 "  \t  \f  \u000B  \t ::command\twith\finterior\u000Bspaces::\t\t \f  \t   \u000B  \f \t  "
         ));
-
-    }
-
-    public interface TextCommandListener {
-        void onCommand(String commandText);
-    }
-
-    public static class FireTextCommands {
-        private final TextCommandListener textCommandListener;
-
-        public FireTextCommands(TextCommandListener textCommandListener) {
-            this.textCommandListener = textCommandListener;
-        }
-
-        public void consumeText(Reader textSource) {
-            // Sigh. filter() and predicates and not().
-            // Read http://stackoverflow.com/a/30506585/253921
-            sanitizeLines(new BufferedReader(textSource)
-                    .lines())
-                    .forEachOrdered(textCommandListener::onCommand);
-        }
-
-        // REFACTOR Make this a collaborator of the text consumer?
-        private Stream<String> sanitizeLines(Stream<String> lines) {
-            return lines
-                    .map(String::trim)
-                    .filter((line) -> !line.isEmpty());
-        }
     }
 }

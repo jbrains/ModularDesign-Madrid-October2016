@@ -6,13 +6,11 @@ import java.util.Scanner;
 
 public class TextInputConsumerAndCommandInterpreter {
     private final BarcodeScannedListener barcodeScannedListener;
+    private final FireTextCommands fireTextCommands;
 
     public TextInputConsumerAndCommandInterpreter(BarcodeScannedListener barcodeScannedListener) {
         this.barcodeScannedListener = barcodeScannedListener;
+        this.fireTextCommands = new FireTextCommands(barcodeScannedListener::onBarcode);
     }
 
-    public void consume(Reader commandSource) {
-        new BufferedReader(commandSource).lines()
-                .forEach(barcodeScannedListener::onBarcode);
-    }
 }

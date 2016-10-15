@@ -1,5 +1,6 @@
 package ca.jbrains.pos.test;
 
+import ca.jbrains.pos.TextCommandListener;
 import org.hamcrest.Factory;
 import org.jmock.Expectations;
 import org.jmock.auto.Mock;
@@ -28,10 +29,6 @@ public class ConsumeTextCommandsWithScannerHasNext {
 
         new ConsumeTextInputAsLines(textCommandListener)
                 .consume(new StringReader("\n\n\n"));
-    }
-
-    public interface TextCommandListener {
-        void onCommand(String commandText);
     }
 
     public static class ConsumeTextInputAsLines {
