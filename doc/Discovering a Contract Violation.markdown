@@ -21,3 +21,49 @@ I thought about a minimal learning test that would help me explore potential dif
 
 I don't know yet whether automating the test would show the problem, because presumably if we pipe `stdout` to a file, then the operating system would flush the file, and we wouldn't be able to detect this timing difference. We might be forced to run the test manually in order to detect the problem. Moreover, I wonder whether the behavior changes between running the application inside the IDE and as a standalone process? This gives us several things to try.
 
+<aside markdown="1">
+
+Inbox
+
++   Run Echo programs manually; do we notice a difference?
++   If we pipe `stdout` to a file, do we notice a difference?
++   Can we simulate running the program and typing on the keyboard, so that we can automate this part? Can we examine the output to reproduce the problem?
++   If we run the Echo programs outside IDEA, do they behave differently?
+
+</aside>
+
+## The First Test
+
+I wrote two Echo programs, one using `Scanner` and the other using `BufferedReader`, and then I ran them to look for differences in the behavior.
+
+As I type the first program, I notice that `Scanner` has two methods: `hasNext()` and `hasNextLine()`. I used `hasNext()` during my demo. Could it be that `hasNextLine()` behaves slightly differently?
+
+<aside markdown="1">
+
+Inbox
+
+-   Run Echo programs manually; do we notice a difference?
+    -   Use `Scanner` with `hasNext()` and `hasNextLine()`; do they behave differently?
+-   If we pipe `stdout` to a file, do we notice a difference?
+-   Can we simulate running the program and typing on the keyboard, so that we can automate this part? Can we examine the output to reproduce the problem?
+-   If we run the Echo programs outside IDEA, do they behave differently?
+
+</aside>
+
+I wrote the `Scanner` version and the `BufferedReader` version of the Echo program and noticed one difference in the behavior: with the `Scanner` version, empty lines did not echo right away, but rather were echoed only when I typed in a non-empty line. For example, when I typed three empty lines (hit `ENTER` three times in a row), then typed some text on the fourth line, after hitting `ENTER` on the fourth line, the program echoed the three empty lines followed by the fourth, non-empty, line. When I ran the `BufferedReader` version of the Echo program, it behaves the way I expected: it echoed each empty line immediately.
+
+I did use the older `BufferedReader` API to write this version of the program. Since then, someone has added `lines()` which creates a Stream of lines from the `BufferedReader`. I wonder whether this echoes empty lines lazily, so I put that in the inbox.
+
+<aside markdown="1">
+
+Inbox
+
+-   Run Echo programs manually; do we notice a difference?
+    -   Use `Scanner` with `hasNext()` and `hasNextLine()`; do they behave differently?
+    -   Use `BufferedReader` with `lines()`; does it behave differently?
+-   If we pipe `stdout` to a file, do we notice a difference?
+-   Can we simulate running the program and typing on the keyboard, so that we can automate this part? Can we examine the output to reproduce the problem?
+-   If we run the Echo programs outside IDEA, do they behave differently?
+
+</aside>
+
