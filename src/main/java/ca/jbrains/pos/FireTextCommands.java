@@ -13,11 +13,6 @@ public class FireTextCommands {
     public void consumeText(Reader textSource) {
         new BufferedReader(textSource)
                 .lines().map(String::trim)
-                .forEachOrdered((each) -> {
-                    if (each.isEmpty())
-                        textCommandListener.onEmptyCommand();
-                    else
-                        textCommandListener.onCommand(each);
-                });
+                .forEachOrdered(textCommandListener::onCommand);
     }
 }

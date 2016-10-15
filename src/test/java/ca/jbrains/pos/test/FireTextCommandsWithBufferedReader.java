@@ -46,7 +46,7 @@ public class FireTextCommandsWithBufferedReader {
     }
 
     @Test
-    public void onlyValidCommands() throws Exception {
+    public void onlyAlreadyCleanNonEmptyCommands() throws Exception {
         // Commands are "valid" if they have neither leading
         // nor trailing whitespace. By implication, this means
         // that they are not empty, either.
@@ -65,9 +65,9 @@ public class FireTextCommandsWithBufferedReader {
     }
 
     @Test
-    public void ignoreEmptyCommands() throws Exception {
+    public void trimEmptyCommands() throws Exception {
         context.checking(new Expectations() {{
-            exactly(7).of(textCommandListener).onEmptyCommand();
+            exactly(7).of(textCommandListener).onCommand("");
         }});
 
         fireTextCommands.consumeText(new StringReader(
@@ -84,7 +84,7 @@ public class FireTextCommandsWithBufferedReader {
     }
 
     @Test
-    public void trimWhitespaceFromCommands() throws Exception {
+    public void trimWhitespaceFromNonEmptyCommands() throws Exception {
         context.checking(new Expectations() {{
             oneOf(textCommandListener).onCommand("::command\twith\finterior\u000Bspaces::");
         }});

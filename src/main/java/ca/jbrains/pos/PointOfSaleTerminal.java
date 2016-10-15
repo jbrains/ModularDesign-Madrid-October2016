@@ -29,17 +29,15 @@ public class PointOfSaleTerminal {
                 consoleDisplay
         );
 
-        new FireTextCommands(new TextCommandListener() {
-            @Override
-            public void onCommand(String commandText) {
+        // CONTRACT Assume that command text is trimmed, but possibly empty.
+        final TextCommandListener commandInterpreter = (commandText) -> {
+            if (commandText.isEmpty())
+                consoleDisplay.displayScannedEmptyBarcodeMessage();
+            else
                 // So far, there's only one command!
                 sellOneItemController.onBarcode(commandText);
-            }
+        };
 
-            @Override
-            public void onEmptyCommand() {
-                consoleDisplay.displayScannedEmptyBarcodeMessage();
-            }
-        }).consumeText(new InputStreamReader(System.in));
+        new FireTextCommands(commandInterpreter).consumeText(new InputStreamReader(System.in));
     }
 }
