@@ -162,7 +162,7 @@ Inbox
 
 </aside>
 
-# Fix The Application!
+# Fix the Application!
 
 Now I have the information I need to fix the application, so I'll do that.
 
@@ -171,4 +171,8 @@ Hm… in order to fix the application, I'd really like to have a failing test. T
 Very well: if I believe that I can fix the problem, then I don't want to delay a release. I'll fix the problem, then add the Contract Tests, then that will confirm the fix, and then I will feel happy. _Of course, if my Customer weren't waiting eagerly for this hotfix, then I would never work so sloppily!_
 
 I run it… and it works!
+
+# Now Really Fix the Application!
+
+I need to separate "consume input" from "interpret command", making sure that I check the special case where "consume input" immediately processes empty lines. I will try to pass the test with `Scanner.hasNext()`, and I expect not to be able to do that; once I confirm that, then I will document that fact, then fix the implementation.
 
