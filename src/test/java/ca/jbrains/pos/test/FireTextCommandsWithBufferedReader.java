@@ -112,7 +112,7 @@ public class FireTextCommandsWithBufferedReader {
             // Read http://stackoverflow.com/a/30506585/253921
             sanitizeLines(new BufferedReader(textSource)
                     .lines())
-                    .forEach(textCommandListener::onCommand);
+                    .forEachOrdered(textCommandListener::onCommand);
         }
 
         // REFACTOR Make this a collaborator of the text consumer?
