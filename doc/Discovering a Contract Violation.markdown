@@ -152,7 +152,23 @@ Actually, no: the old-style `BufferedReader` program produced three empty lines,
 
 </aside>
 
+If piping three empty lines of input reproduces the problem, then surely I can write a fully-automated code-level test that consumes three empty lines and input and expects either zero or three lines of output. I'll do that later.
 
+<aside markdown="1">
 
+Inbox
 
+-   Write a Contract Test for the implementations that consumes three empty lines and produces three lines of output, either by firing an event or counting the lines. Does this Contract Test reproduce the problem? Are we instead stuck with piping input from a file?
+
+</aside>
+
+# Fix The Application!
+
+Now I have the information I need to fix the application, so I'll do that.
+
+Hm… in order to fix the application, I'd really like to have a failing test. This would encourage me to split the "chop lines into commands" behavior from the "interpret commands as _barcode scanned_" behavior. _But I really want to see the application run!!_
+
+Very well: if I believe that I can fix the problem, then I don't want to delay a release. I'll fix the problem, then add the Contract Tests, then that will confirm the fix, and then I will feel happy. _Of course, if my Customer weren't waiting eagerly for this hotfix, then I would never work so sloppily!_
+
+I run it… and it works!
 
