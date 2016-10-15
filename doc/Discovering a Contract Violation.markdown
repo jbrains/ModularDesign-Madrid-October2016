@@ -180,5 +180,8 @@ After fixing the implementation, I extracted the Contract Tests that will help a
 
 Well… _actually_, I plan to filter out all the empty commands strip whitespace anyway, so I'd rather do that than fix the behavior for empty commands as I've done here. I might as well do that, then the problem disappears. In this case, I leave behind some learning tests for `Scanner.hasNext()` that I might find useful in the future. I suppose I should really extract those into a separate project. I'll do that as soon as I have another two examples of similar misunderstandings of the Java standard library.
 
+To finish up, I did the following:
 
++   I split consuming text from interpreting commands.
++   I moved 
 

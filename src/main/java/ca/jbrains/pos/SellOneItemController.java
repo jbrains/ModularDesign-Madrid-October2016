@@ -9,12 +9,8 @@ public class SellOneItemController implements BarcodeScannedListener {
         this.display = display;
     }
 
+    // CONTRACT barcode is trimmed and not empty
     public void onBarcode(String barcode) {
-        if ("".equals(barcode)) {
-            display.displayScannedEmptyBarcodeMessage();
-            return;
-        }
-
         final Price price = catalog.findPrice(barcode);
         if (price == null)
             display.displayProductNotFoundMessage(barcode);

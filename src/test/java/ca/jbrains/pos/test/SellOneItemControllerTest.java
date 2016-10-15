@@ -51,19 +51,4 @@ public class SellOneItemControllerTest {
 
         controller.onBarcode("::unknown::");
     }
-
-    @Test
-    public void emptyBarcode() throws Exception {
-        final Display display = context.mock(Display.class);
-
-        final SellOneItemController controller
-                = new SellOneItemController(null, display);
-
-        context.checking(new Expectations() {{
-            oneOf(display).displayScannedEmptyBarcodeMessage();
-        }});
-        
-        controller.onBarcode("");
-    }
-
 }
