@@ -1,6 +1,8 @@
-package ca.jbrains.learn.java.util;
+package ca.jbrains.learn.java.io;
 
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 /*
 * This program provides a manual test for consuming input
@@ -9,16 +11,16 @@ import java.util.Scanner;
 * `stdout` immediately. Type some blank lines (press ENTER
 * a few times in a row) and -- as long as you don't go too
 * fast -- the program echoes those lines back to you
-* right away. This makes Scanner.hasNextLine() suitable
+* right away. This makes BufferedReader.lines() suitable
 * for a command-line interface where the user expects to
 * see an immediate reply to typing a text command.
 *
 * By comparison, Scanner.hasNext() does not behave this way.
  */
-public class DoesScannerWithHasNextLineConsumeStdinLazily {
-    public static void main(String[] args) {
-        final Scanner source = new Scanner(System.in);
-        while (source.hasNextLine())
-            System.out.println(source.nextLine());
+public class DoesBufferedReaderStreamOfLinesConsumeStdinLazily {
+    public static void main(String[] args) throws IOException {
+        new BufferedReader(
+                new InputStreamReader(System.in)
+        ).lines().forEach(System.out::println);
     }
 }

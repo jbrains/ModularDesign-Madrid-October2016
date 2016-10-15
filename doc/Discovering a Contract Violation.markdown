@@ -107,4 +107,5 @@ Inbox
 
 </aside>
 
-## 
+When I run the Echo program with `BufferedReader` using `lines()`, it behaves the way I expect. Sadly, I can't think of how to write a contract test for this behavior, so for now, I have to document my understanding of the contract carefully. I will write explanatory comments in the code until I can figure out how to write an automated test that expresses the notion that `Scanner.hasNext()` might delay consuming certain lines of text, and therefore I can't use it to integrate with an input stream in situations where I need to predict the timing of consuming the text line by line.
+
