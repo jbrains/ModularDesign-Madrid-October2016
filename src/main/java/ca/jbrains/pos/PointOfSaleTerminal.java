@@ -35,6 +35,7 @@ public class PointOfSaleTerminal {
                 consoleDisplay.displayScannedEmptyBarcodeMessage();
             else
                 // So far, there's only one command!
+                // CONTRACT The command is never empty
                 sellOneItemController.onBarcode(commandText);
         };
 
