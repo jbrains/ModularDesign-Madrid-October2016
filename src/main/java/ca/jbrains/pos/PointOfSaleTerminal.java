@@ -31,11 +31,12 @@ public class PointOfSaleTerminal {
 
         // CONTRACT Assume that command text is trimmed, but possibly empty.
         final TextCommandListener commandInterpreter = (commandText) -> {
+            // CONTRACT We only dispatch non-empty commands,
+            // so controllers don't have to check for empty.
             if (commandText.isEmpty())
                 consoleDisplay.displayScannedEmptyBarcodeMessage();
             else
                 // So far, there's only one command!
-                // CONTRACT The command is never empty
                 sellOneItemController.onBarcode(commandText);
         };
 

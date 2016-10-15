@@ -183,5 +183,6 @@ Well… _actually_, I plan to filter out all the empty commands strip whitespace
 To finish up, I did the following:
 
 +   I split consuming text from interpreting commands.
-+   I moved 
++   I moved the responsibility for handling empty text commands (not just barcodes) _eventually_ into the command interpreter, where I believe it belongs.
++   I documented some contracts, particularly related to text commands 
 
