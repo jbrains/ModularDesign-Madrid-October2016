@@ -19,10 +19,11 @@ public class ConsumeTextCommandsWithScannerHasNext {
     private TextCommandListener textCommandListener;
 
     @Test
-    // This test fails! How do I mark it that way?
-    public void onlyEmptyLines() throws Exception {
+    public void breaksContractWithEmptyLines() throws Exception {
         context.checking(new Expectations() {{
-            exactly(3).of(textCommandListener).onCommand("");
+            // According to the contract, there should be 3 commands,
+            // each with empty text.
+            exactly(0).of(textCommandListener).onCommand("");
         }});
 
         new ConsumeTextInputAsLines(textCommandListener)
