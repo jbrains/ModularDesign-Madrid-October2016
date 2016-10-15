@@ -37,7 +37,7 @@ public class FireTextCommandsWithBufferedReader {
 
     // REFACTOR Move to generic text library
     public static String unlines(List<String> lines) {
-        return String.join(System.lineSeparator(), lines);
+        return lines.stream().reduce("", (sum, each) -> sum + each + System.lineSeparator());
     }
 
     @Before
@@ -67,7 +67,7 @@ public class FireTextCommandsWithBufferedReader {
     @Test
     public void ignoreEmptyCommands() throws Exception {
         context.checking(new Expectations() {{
-            never(textCommandListener);
+            exactly(7).of(textCommandListener).onEmptyCommand();
         }});
 
         fireTextCommands.consumeText(new StringReader(
