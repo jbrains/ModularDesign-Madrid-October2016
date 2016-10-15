@@ -28,7 +28,7 @@ public class PointOfSaleTerminal {
                 }}),
                 consoleDisplay
         );
-        
+
         new FireTextCommands(new TextCommandListener() {
             @Override
             public void onCommand(String commandText) {
