@@ -3,7 +3,7 @@ title: "Discovering a Contract Violation"
 date: 2016-10-15
 ---
 
-I had an embarrassing situation happen in a training course: I put everything together and It **Didn't** Just Work. I couldn't figure out on stage what had happened, so I'm writing this article to document how I explored the problem.
+Well, that was embarrassing: I put everything together and It **Didn't** Just Work. I couldn't figure out on stage what had happened, so I'm writing this article to document how I explored the problem.
 
 # The Problem
 
@@ -184,5 +184,8 @@ To finish up, I did the following:
 
 +   I split consuming text from interpreting commands.
 +   I moved the responsibility for handling empty text commands (not just barcodes) _eventually_ into the command interpreter, where I believe it belongs.
-+   I documented some contracts, particularly related to text commands 
++   I documented some contracts, particularly related to dispatching text commands (to controllers, at least for now).
++   I tried to rearrange the Point of Sale Terminal entry point code to make it easier to see how we connect everything together.
+
+
 
